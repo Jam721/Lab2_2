@@ -1,33 +1,53 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <cstring>
-
-
-#define size 1000
 
 class Planet{
-    char _name[size];
+    char* _name;
     int _diam;
     bool _live;
     unsigned short _satellites;
 
 public:
     Planet(){
-        _name[0] = '\0';
+        _name = nullptr;
         _diam = 0;
         _live = false;
         _satellites = 0;
     }
     Planet(char* name, int diam, bool live, unsigned short satellites){
-        strcpy(_name, name);
+        _name = new char[strlen(name)+1];
+        strcpy_s(_name, strlen(name)+1 ,name);
         _diam = diam;
         _live = live;
         _satellites = satellites;
     }
+    Planet(const Planet& planet){
+        _name = new char[strlen(planet._name)+1];
+        strcpy_s(_name, strlen(planet._name)+1 ,planet._name);
+        _diam = planet._diam;
+        _live = planet._live;
+        _satellites = planet._satellites;
+    }
+
+    Planet& operator =(const Planet& planet){
+        if(_name){
+            delete[] _name;
+        }
+        _name = new char[strlen(planet._name)+1];
+        strcpy_s(_name, strlen(planet._name)+1 ,planet._name);
+        _diam = planet._diam;
+        _live = planet._live;
+        _satellites = planet._satellites;
+        return *this;
+    }
 
     void SetName(char* name){
-        strcpy(_name, name);
+        if(_name){
+            delete[] _name;
+        }
+        _name = new char[strlen(name)+1];
+        strcpy_s(_name, strlen(name)+1 ,name);
     }
     void SetDiam(int diam){
         _diam = diam;
@@ -59,7 +79,10 @@ public:
     }
 
     friend std::ostream &operator<<(std::ostream &out, const Planet obj);
-
+    ~Planet(){
+        if(_name)
+            delete[] _name;
+    }
 };
 std::ostream &operator<<(std::ostream &out, const Planet obj) {
     out << "Имя планеты: " << obj._name << "\tДиаметр: " << obj._diam << "\t\tЖизнь: ";
@@ -80,10 +103,13 @@ int MenuFind();
 void FindPlanet(Planet* planets, int n);
 
 
-void Add(Planet* planets);
+Planet* Add(Planet* planets);
 
-void Delete(Planet* planets, int N);
+Planet* Delete(Planet* planets);
 
 void CorrectionOfInformation(Planet* planets);
 
 void WriteDBase(Planet* planets);
+void ReadFile(Planet* planets);
+
+void SortPlanets(Planet* planets);

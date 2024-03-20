@@ -1,0 +1,5 @@
+4
+Earth 12000 1 1
+Jupiter 51000 0 12
+Mars 10000 0 4
+Saturn 11000 1 12
