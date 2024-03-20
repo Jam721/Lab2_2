@@ -1,4 +1,3 @@
-#include <cstring>
 #include "a.h"
 
 using namespace std;
@@ -12,6 +11,7 @@ int main() {
     }
     int count = 0;
     fin>>count;
+    fin.close();
 
     int N = count+1;
     int n = N;

@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/CppProj/Test/cmake-build-debug",
-		"source" : "E:/CppProj/Test"
+		"build" : "E:/CppProj/Lab2_2/cmake-build-debug",
+		"source" : "E:/CppProj/Lab2_2"
 	},
 	"version" : 
 	{
