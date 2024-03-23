@@ -122,9 +122,9 @@ int MenuFind(){
 
 void FindPlanet(Abonent* abonent, int n){
     char name[40];
-    int diam;
-    bool live;
-    unsigned short satellites;
+    int number;
+    bool active;
+    unsigned short cost;
 
     while(true){
         switch (MenuFind()) {
@@ -135,21 +135,21 @@ void FindPlanet(Abonent* abonent, int n){
                 break;
             case 2:
                 cout << "Введите диаметр планеты: ";
-                cin >> diam;
-                diam = (int)diam;
-                Find(abonent, n, diam);
+                cin >> number;
+                number = (int)number;
+                Find(abonent, n, number);
                 break;
             case 3:
                 cout << "Введите есть ли жизнь на планете(1 - если да 0 - если нет): ";
-                cin >> live;
-                live = (bool)live;
-                Find(abonent, n, live);
+                cin >> active;
+                active = (bool)active;
+                Find(abonent, n, active);
                 break;
             case 4:
                 cout << "Введите количество спутников на планете: ";
-                cin >> satellites;
-                satellites = (unsigned short)satellites;
-                Find(abonent, n, satellites);
+                cin >> cost;
+                cost = (unsigned short)cost;
+                Find(abonent, n, cost);
                 break;
             case 5:
                 return;

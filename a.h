@@ -52,7 +52,7 @@ public:
         _name = new char[strlen(name)+1];
         strcpy_s(_name, strlen(name)+1 ,name);
     }
-    void SetNumber(int number){
+    void SetNumber(long number){
         _number = number;
     }
     void SetActive(bool active){
