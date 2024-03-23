@@ -129,24 +129,24 @@ void FindPlanet(Abonent* abonent, int n){
     while(true){
         switch (MenuFind()) {
             case 1:
-                cout << "Введите имя планеты: ";
+                cout << "Введите имя абонента: ";
                 cin >> name;
                 Find(abonent, n, name);
                 break;
             case 2:
-                cout << "Введите диаметр планеты: ";
+                cout << "Введите номер абонента: ";
                 cin >> number;
                 number = (int)number;
                 Find(abonent, n, number);
                 break;
             case 3:
-                cout << "Введите есть ли жизнь на планете(1 - если да 0 - если нет): ";
+                cout << "Введите активен ли номер: ";
                 cin >> active;
                 active = (bool)active;
                 Find(abonent, n, active);
                 break;
             case 4:
-                cout << "Введите количество спутников на планете: ";
+                cout << "Введите цену: ";
                 cin >> cost;
                 cost = (unsigned short)cost;
                 Find(abonent, n, cost);
@@ -160,59 +160,59 @@ void FindPlanet(Abonent* abonent, int n){
     }
 }
 
-void Find(Abonent* planets, int n, char* name){ //По фамилии
+void Find(Abonent* abonents, int n, char* name){
     int k = 0;
     int _n = 0;
-    for (int i = 0; planets[i].GetNumber() != 0; i++) {
+    for (int i = 0; abonents[i].GetNumber() != 0; i++) {
         _n++;
     }
     for (int i = 0; i< _n; i++){
-        if(!strcmp(planets[i].GetName(), name)){
-            cout<<planets[i];
+        if(!strcmp(abonents[i].GetName(), name)){
+            cout<<abonents[i];
             k++;
         }
     }
     if (k==0){
-        cout << "Не найдено такой планеты по введенному значению!\n";
+        cout << "Не найдено такго абонента по введенному значению!\n";
     }
     cout<<endl;
 }
-void Find(Abonent* planets, int n, bool live){ //По жизни
+void Find(Abonent* abonents, int n, bool active){
     int k = 0;
     for (int i = 0; i< n; i++){
-        if(live==planets[i].GetActive()){
-            cout << planets[i];
+        if(active==abonents[i].GetActive()){
+            cout << abonents[i];
             k++;
         }
     }
     if (k==0){
-        cout << "Не найдено такой планеты по введенному значению!\n";
+        cout << "Не найдено такого абонента по введенному значению!\n";
     }
     cout<<endl;
 }
-void Find(Abonent* planets, int n, unsigned short satellites){ //По спутникам
+void Find(Abonent* abonents, int n, unsigned short cost){ //По спутникам
     int k = 0;
     for (int i = 0; i< n; i++){
-        if(satellites==planets[i].GetCost()){
-            cout << planets[i];
+        if(cost==abonents[i].GetCost()){
+            cout << abonents[i];
             k++;
         }
     }
     if (k==0){
-        cout << "Не найдено такой планеты по введенному значению!\n";
+        cout << "Не найдено такго абонента по введенному значению!\n";
     }
     cout<<endl;
 }
-void Find(Abonent* planets, int n, int diam){ //По диаметру
+void Find(Abonent* abonents, int n, int number){
     int k = 0;
     for (int i = 0; i< n; i++){
-        if(planets[i].GetNumber() == diam){
-            cout << planets[i];
+        if(abonents[i].GetNumber() == number){
+            cout << abonents[i];
             k++;
         }
     }
     if (k==0){
-        cout << "Не найдено такой планеты по введенному значению!\n";
+        cout << "Не найдено такго абонента по введенному значению!\n";
     }
     cout<<endl;
 }
@@ -222,11 +222,8 @@ Abonent* Add(Abonent* abonents){
     cin>>ab;
 
     int n = 0;
-    while(true){
-        if(abonents[n].GetNumber() != 0)
-            n++;
-        else
-            break;
+    for (int i = 0; abonents[i].GetNumber() != 0; i++) {
+        n++;
     }
 
     Abonent* abonent = new Abonent[n + 2];
@@ -242,7 +239,7 @@ Abonent* Add(Abonent* abonents){
 
 Abonent* Delete(Abonent* abonents){
     PrintDbase(abonents);
-    cout<<"Введите номер планеты, которой хотите удалить: ";
+    cout<<"Введите номер абонента, которого хотите удалить: ";
 
     int n = 0;
     for (int i = 0; abonents[i].GetNumber() != 0; i++) {
@@ -263,17 +260,14 @@ Abonent* Delete(Abonent* abonents){
 
         delete[] abonents;
         return abonent;
-
-        cout<<"Успешно удалили";
-    } else{
-        cout << "Неподходящий номер!";
     }
+    cout << "Неподходящий номер!";
     return abonents;
 }
 
 void CorrectionOfInformation(Abonent* abonents){
     PrintDbase(abonents);
-    cout << "Выберите в какой планете хотите корректировать сведенья: ";
+    cout << "Выберите, у какого абонента хотите корректировать сведенья: ";
 
     int n = 0;
     for (int i = 0; abonents[i].GetNumber() != 0; i++) {
@@ -290,9 +284,9 @@ void CorrectionOfInformation(Abonent* abonents){
         cin >> why;
 
         char name[40];
-        int diam;
-        bool live;
-        unsigned short satellites;
+        long number;
+        bool active;
+        unsigned short cost;
         if(why>0 && why<5){
             switch (why) {
                 case 1:
@@ -303,22 +297,22 @@ void CorrectionOfInformation(Abonent* abonents){
                     break;
                 case 2:
                     cout<<"Введите новый номер(пример 8005553535): ";
-                    cin >> diam;
-                    abonents[choose - 1].SetNumber(diam);
-                    cout<<"Вы успешно поменяли номер на " << diam;
+                    cin >> number;
+                    abonents[choose - 1].SetNumber(number);
+                    cout<<"Вы успешно поменяли номер на " << number;
                     break;
                 case 3:
                     cout<<"Введите новую информацию об активности (1-еть 0-нет): ";
-                    cin >> live;
-                    abonents[choose - 1].SetActive(live);
+                    cin >> active;
+                    abonents[choose - 1].SetActive(active);
                     cout<<"Вы успешно поменяли активность на " ;
-                    live==1?cout<<"'активно'":cout<<"'не активно'";
+                    active==1?cout<<"'активно'":cout<<"'не активно'";
                     break;
                 case 4:
                     cout<<"Введите новую цену(от 0): ";
-                    cin >> satellites;
-                    abonents[choose - 1].SetCost(satellites);
-                    cout<<"Вы успешно поменяли цену на " << satellites;
+                    cin >> cost;
+                    abonents[choose - 1].SetCost(cost);
+                    cout<<"Вы успешно поменяли цену на " << cost;
                     break;
                 default:
                     break;
@@ -361,7 +355,7 @@ void SortPlanets(Abonent* abonents){
     Abonent pl;
     for(int i = 0; i < n-1; i++){
         for (int j = 0; j<n-i-1; j++){
-            if(abonents[j].GetNumber() > abonents[j + 1].GetNumber()){
+            if(abonents[j].GetCost() > abonents[j + 1].GetCost()){
                 pl = abonents[j];
                 abonents[j] = abonents[j+1];
                 abonents[j+1] = pl;
