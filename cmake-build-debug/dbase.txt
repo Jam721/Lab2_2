@@ -1,5 +1,5 @@
 4
-Earth 12000 1 1
-Jupiter 51000 0 12
-Mars 10000 0 4
-Saturn 11000 1 12
+Artur 621 0 453
+Andrey 1252 1 350
+mama 4569 1 123
+papa 12345 1 789

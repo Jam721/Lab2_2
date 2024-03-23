@@ -2,115 +2,138 @@
 #include <fstream>
 #include <iomanip>
 #include <cstring>
+#include <string>
 
-class Planet{
+
+class Abonent{
     char* _name;
-    int _diam;
-    bool _live;
-    unsigned short _satellites;
+    long _number;
+    bool _active;
+    unsigned short _cost;
 
 public:
-    Planet(){
+    Abonent(){
         _name = nullptr;
-        _diam = 0;
-        _live = false;
-        _satellites = 0;
+        _number = 0;
+        _active = false;
+        _cost = 0;
     }
-    Planet(char* name, int diam, bool live, unsigned short satellites){
+    Abonent(char* name, long number, bool active, unsigned short cost){
         _name = new char[strlen(name)+1];
         strcpy_s(_name, strlen(name)+1 ,name);
-        _diam = diam;
-        _live = live;
-        _satellites = satellites;
+        _number = number;
+        _active = active;
+        _cost = cost;
     }
-    Planet(const Planet& planet){
-        _name = new char[strlen(planet._name)+1];
-        strcpy_s(_name, strlen(planet._name)+1 ,planet._name);
-        _diam = planet._diam;
-        _live = planet._live;
-        _satellites = planet._satellites;
+    Abonent(const Abonent& abonent){
+        _name = new char[strlen(abonent._name)+1];
+        strcpy_s(_name, strlen(abonent._name)+1 ,abonent._name);
+        _number = abonent._number;
+        _active = abonent._active;
+        _cost = abonent._cost;
     }
 
-    Planet& operator =(const Planet& planet){
+    Abonent& operator =(const Abonent& abonent){
         if(_name){
             delete[] _name;
         }
-        _name = new char[strlen(planet._name)+1];
-        strcpy_s(_name, strlen(planet._name)+1 ,planet._name);
-        _diam = planet._diam;
-        _live = planet._live;
-        _satellites = planet._satellites;
+        _name = new char[strlen(abonent._name)+1];
+        strcpy_s(_name, strlen(abonent._name)+1 ,abonent._name);
+        _number = abonent._number;
+        _active = abonent._active;
+        _cost = abonent._cost;
         return *this;
     }
 
     void SetName(char* name){
-        if(_name){
+        if(_name!=nullptr){
             delete[] _name;
         }
         _name = new char[strlen(name)+1];
         strcpy_s(_name, strlen(name)+1 ,name);
     }
-    void SetDiam(int diam){
-        _diam = diam;
+    void SetNumber(int number){
+        _number = number;
     }
-    void SetLive(bool live){
-        _live = live;
+    void SetActive(bool active){
+        _active = active;
     }
-    void SetSatellites(unsigned short satellites){
-        _satellites = satellites;
+    void SetCost(unsigned short cost){
+        _cost = cost;
     }
-    void SetAll(char* name, int diam, bool live, unsigned short satellites){
+    void SetAll(char* name, long number, bool active, unsigned short cost){
         SetName(name);
-        SetDiam(diam);
-        SetLive(live);
-        SetSatellites(satellites);
+        SetNumber(number);
+        SetActive(active);
+        SetCost(cost);
     }
 
     char* GetName(){
         return _name;
     }
-    int GetDiam(){
-        return _diam;
+    long GetNumber(){
+        return _number;
     }
-    bool GetLive(){
-        return _live;
+    bool GetActive(){
+        return _active;
     }
-    unsigned short GetSatellites(){
-        return _satellites;
+    unsigned short GetCost(){
+        return _cost;
     }
 
-    friend std::ostream &operator<<(std::ostream &out, const Planet obj);
-    ~Planet(){
+    friend std::ostream &operator<<(std::ostream &out, const Abonent obj);
+    friend std::istream &operator>>(std::istream &in, Abonent& obj);
+    ~Abonent(){
         if(_name)
             delete[] _name;
     }
 };
-std::ostream &operator<<(std::ostream &out, const Planet obj) {
-    out << "Имя планеты: " << obj._name << "\tДиаметр: " << obj._diam << "\t\tЖизнь: ";
-    obj._live?out<<"есть \t ":out<<"нет \t ";
-    out << "Спутники: " << obj._satellites << std::endl;
+std::ostream &operator<<(std::ostream &out, const Abonent obj) {
+    out << "Имя человека: " << obj._name << "\tНомер: " << obj._number << "\t\tАктивность: ";
+    obj._active ? out << "активен \t " : out << "не активен \t ";
+    out << "Цена: " << obj._cost << std::endl;
     return out;
+}
+std::istream &operator>>(std::istream &in, Abonent& obj){
+    std::cout<<"Ввежите имя человека(на английском): ";
+    char name[40];
+    in>>name;
+
+    std::cout<<"Введите номер человека: ";
+    long number;
+    in>>number;
+
+    std::cout<<"Введите активен ли номер(1 если да 0 если нет): ";
+    bool active;
+    in>>active;
+
+    std::cout<<"Введите цену(от 0): ";
+    unsigned short cost;
+    in>>cost;
+
+    obj.SetAll(name, number, active, cost);
+    return in;
 }
 
 int Menu();
 
-void PrintDbase(Planet* planets);
+void PrintDbase(Abonent* abonents);
 
-void Find(Planet* planets, int n, char* name);
-void Find(Planet* planets, int n, int diam);
-void Find(Planet* planets, int n, bool live);
-void Find(Planet* planets, int n, unsigned short satellites);
+void Find(Abonent* abonents, int n, char* name);
+void Find(Abonent* abonents, int n, int diam);
+void Find(Abonent* abonents, int n, bool live);
+void Find(Abonent* abonents, int n, unsigned short satellites);
 int MenuFind();
-void FindPlanet(Planet* planets, int n);
+void FindPlanet(Abonent* abonents, int n);
 
 
-Planet* Add(Planet* planets);
+Abonent* Add(Abonent* abonents);
 
-Planet* Delete(Planet* planets);
+Abonent* Delete(Abonent* abonents);
 
-void CorrectionOfInformation(Planet* planets);
+void CorrectionOfInformation(Abonent* abonents);
 
-void WriteDBase(Planet* planets);
-void ReadFile(Planet* planets);
+void WriteDBase(Abonent* abonents);
+void ReadFile(Abonent* abonents);
 
-void SortPlanets(Planet* planets);
+void SortPlanets(Abonent* abonents);
